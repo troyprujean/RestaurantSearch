@@ -4,7 +4,7 @@ import SearchBar from '../components/SearchBar';
 import useRestaurants from '../hooks/useRestaurants';
 import RestaurantList from '../components/RestaurantList';
 
-const SearchScreen = () => {
+const SearchScreen = ({ navigation }) => {
     const [term, setTerm] = useState('');
     const [searchApi, restaurants, errorMessage] = useRestaurants();
 
@@ -15,8 +15,8 @@ const SearchScreen = () => {
         });
     };
 
-    return (        
-        <View style={styles.containerStyle}>
+    return (
+        <>
             <SearchBar 
                 term={term} 
                 onTermChange={setTerm} 
@@ -24,19 +24,15 @@ const SearchScreen = () => {
             />
             {errorMessage ? <Text style={styles.errorStyle}>{errorMessage}</Text> : null}
             <ScrollView>
-                <RestaurantList title='Cost Effective' restaurants={filterResultsByPrice('$')}/>
-                <RestaurantList title='Bit Pricier' restaurants={filterResultsByPrice('$$')}/>
-                <RestaurantList title='Big Spender' restaurants={filterResultsByPrice('$$$')}/>
+                <RestaurantList title='Cost Effective' restaurants={filterResultsByPrice('$')} navigation={navigation} />
+                <RestaurantList title='Bit Pricier' restaurants={filterResultsByPrice('$$')} navigation={navigation} />
+                <RestaurantList title='Big Spender' restaurants={filterResultsByPrice('$$$')} navigation={navigation} />
             </ScrollView>            
-        </View>
+        </>
     );
 };
 
 const styles = StyleSheet.create({
-    containerStyle: {
-        backgroundColor: '#FFFFFF',
-        flex: 1
-    },
     errorStyle: {
         backgroundColor: 'red',
         color: 'white'

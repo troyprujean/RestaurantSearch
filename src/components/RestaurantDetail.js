@@ -4,7 +4,11 @@ import { View, Image, Text, StyleSheet } from 'react-native';
 const RestaurantDetail = ({ restaurant }) => {
     return (
         <View style={styles.containerStyles}>
-            <Image source={{ uri: restaurant.image_url }} style={styles.imageStyles} />
+            { 
+                restaurant.image_url !== '' 
+                ? <Image source={{ uri: restaurant.image_url }} style={styles.imageStyles} /> 
+                : <View style={[styles.imageStyles, {justifyContent: 'center'}]}><Text style={{textAlign: 'center'}}>No Image</Text></View>
+            }
             <Text style={styles.nameStyle} >{restaurant.name}</Text>
             <Text>{restaurant.rating} Stars, {restaurant.review_count} Reviews</Text>
         </View>
