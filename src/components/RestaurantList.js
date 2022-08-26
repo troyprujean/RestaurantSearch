@@ -4,6 +4,10 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native
 import RestaurantDetail from './RestaurantDetail';
 
 const RestaurantList = ({ title, restaurants, navigation }) => {
+    if (!restaurants.length) {
+        return null;
+    }
+
     return (
         <View style={styles.containerStyle}>
             <Text style={styles.titleStyle}>{title}</Text>
@@ -14,7 +18,7 @@ const RestaurantList = ({ title, restaurants, navigation }) => {
                 keyExtractor={(restaurant) => restaurant.id}
                 renderItem={({ item }) => {
                     return (
-                        <TouchableOpacity onPress={() => navigation.navigate('RestaurantShow')}>
+                        <TouchableOpacity onPress={() => navigation.navigate('RestaurantShow', { restaurantId: item.id })}>
                             <RestaurantDetail restaurant={item}/>
                         </TouchableOpacity>                        
                     )
